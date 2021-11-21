@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Materieltype
+{% endblock %}
+
+{% block body %}
+
+    {{ include('materieltype/_form.html.twig', {'titre':'Détail d\'un  materiel de référence','button_label': 'Mettre à jour'}) }}
+
+
+
+{% endblock %}
+{% block javascripts %}
+<script>
+$(document).ready(function(){
+$('input').attr('readonly','true')
+$('textarea').attr('readonly','true')
+
+})
+</script>
+
+{% endblock %}
+
+

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail d'un materiel{% endblock %}
+
+{% block body %}
+
+    {% include('materiel/_form.html.twig') with {'titre':'Détail d\'un matériel'} %}
+
+{% endblock %}
+{% block javascripts %}
+<script>
+$(document).ready(function(){
+$('input').attr('readonly','true')
+$('textarea').attr('readonly','true')
+
+})
+</script>
+
+{% endblock %}

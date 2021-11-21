@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail d'une intervention
+{% endblock %}
+
+{% block body %}
+
+		{{ include('intervention/_form.html.twig', {'titre':'Détail d\'une intervention','enregistrer_label': 'Mettre à jour'}) }}
+
+    
+
+   
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+           
+        $('input[type="text"]').attr('readonly','true').css('font-weight','575');
+        $('textarea').attr('readonly','true').css('font-weight','575');
+        $('input[type="checkbox"]').attr('onclick','return false');
+         
+  
+    })
+</script>
+
+{% endblock %}

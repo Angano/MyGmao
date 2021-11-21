@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Materiel{% endblock %}
+
+{% block body %}
+   
+
+    
+    {{ include('materiel/_form.html.twig', {'titre': 'Ajout d\'un nouveau matériel sur site', 'enregistrer_label':'Ajouter'}) }}
+
+{% endblock %}
+
+
+{% block javascripts %}
+<script>
+
+
+    $(document).ready(function(){
+        $('.no-edit').attr('readonly','true').css('background-color','#eaeaea').css('color','#0054a8')
+    })
+    </script>
+{% endblock %}

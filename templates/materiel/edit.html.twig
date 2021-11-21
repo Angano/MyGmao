@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition d'un matériel{% endblock %}
+
+
+{% block body %}
+ 
+{%  include('materiel/_form.html.twig')  with {'titre':'Edition d\'un matériel'}  %}
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+
+        $('.no-edit').attr('readonly','true').css('background-color','rgb(225, 236, 253)').css('color','#0054a8')
+      
+  
+    })
+</script>
+
+{% endblock %}

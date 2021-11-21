@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="row mt-5" >
+<div class="col-md-10 mx-auto">
+<h3>bienvenue sur Gmao-light</h3>
+<p>Gmao-light est une application de Gestion de Maintenance assisté par Ordinateur<br>
+Elle est destinée à un suivi de maintenace léger, developpé à l'aide de Symfony<br>
+3 types d'utilisateur peuvent naviguer: le technicien, le responsable technique et l'administrateur</p>
+<h4>les étapes</h4>
+<ul>
+    <li>La déclaration des utilisateurs par l'administrateur</li>
+    <li>L'ajout des matériels de référence, des matériels installé en clientèle par le responsable technique</li>
+    <li>L'ajout des demandes d'intervention par une personne tierce</li>
+</ul>
+<p>Le responsable technique crée les demandes d'intervention, le technicien se connecte à l'application et peut consilter les travaux qui lui incombe <br>
+Une fois les interventions terminées, il renseigne les travaux effectué et clôture la demande d'intervention
+</p>
+</div></div>
+
+{% endblock %}
+

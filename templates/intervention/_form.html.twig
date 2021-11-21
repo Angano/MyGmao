@@ -1,0 +1,300 @@
+{% if form is defined %}
+	{{ form_errors(form) }}
+	{{form_start(form)}}
+	{{ form_row(form._token) }}
+{% endif %}
+
+{% block stylesheets %}
+
+	<style>
+		#technicien li:hover,
+		#clients li:hover {
+			cursor: pointer;
+			background-color: #cfe2ff;
+			padding-left: 0;
+			width: 100%;
+
+		}
+		td {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+
+{% endblock %}
+
+
+<div class="card ">
+	<div class="alert-primary card-header h5">
+		<b>
+			{% if titre is defined %}
+				{{titre}}
+			{% endif %}
+		</b>
+	</div>
+	<div class="card-body mx-3">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">Date</span>
+					{% if form is defined %}
+						{{form_widget(form.date)}}
+						{{form_errors(form.date)}}
+					{% else %}
+
+						<input type="text" class="form-control" value="{% if intervention.date is defined %} {{intervention.date|date("d-m-Y")}} {%endif%}" aria-label="marque" aria-describedby="basic-addon1">
+					{% endif %}
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">Intervention N°</span>
+					<input type="text" class="no-edit form-control" value="{% if intervention.id is defined %}{{intervention.id}} {% endif %}" aria-label="Intervention" aria-describedby="basic-addon1">
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">Technicien</span>
+					{% if form is defined %}
+						{{form_widget(form.technicien)}}
+						<input type="text" class="form-control" id="search_technicien" value="{% if intervention.technicien.nom is defined %} {{intervention.technicien.nom }} {{intervention.technicien.prenom }} {% endif %}">
+						<span class="input-group-text" id="list_technicien">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewbox="0 0 16 16">
+								<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+							</svg>
+						</span>
+						<div id="reponse" style="position:relative; width:100%"></div>
+					{% else %}
+
+						<input type="text" class="form-control" value="{% if intervention.technicien.nom is defined %} {{intervention.technicien.nom }} {{intervention.technicien.prenom }} {% endif %}" aria-label="technicien" aria-describedby="basic-addon1">
+					{% endif %}
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-check form-switch mb-3 ">
+					<span class="form-check-label" id="basic-addon1">Terminée</span>
+					<input type="checkbox" class="form-check-input" disabled class="no-edit" aria-label="status" {% if intervention.status is defined and intervention.status==true %} checked {% endif %} aria-describedby="basic-addon1">
+				</div>
+			</div>
+		</div>
+
+		<div class="row ">
+			<div class="col-md-10 mt-3">
+				<h5>
+					<b>Client</b>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text " id="basic-addon1">Société</span>
+					{% if form is defined %}
+						{{form_widget(form.client)}}
+						<input type="text" class="form-control" id="search_client" value="{% if intervention.client.nom is defined %}{{intervention.client.societe }} {% endif %}">
+						<span class="input-group-text" id="list_societe">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewbox="0 0 16 16">
+								<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+							</svg>
+						</span>
+					{% else %}
+
+						<input type="text" class="form-control" value="{% if intervention.client.societe is defined %} {{intervention.client.societe }} {% endif %}" aria-label="Societe" aria-describedby="basic-addon1">
+					{% endif %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text" id="basic-addon1">Nom</span>
+					<input type="text" class="form-control" id="nom" value="{% if intervention.client.nom is defined %}{{intervention.client.nom}} {% endif %}" aria-label="Nom" aria-describedby="basic-addon1">
+					<span class="input-group-text" id="list_nom">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewbox="0 0 16 16">
+							<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+						</svg>
+					</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text">Prénom</span>
+					<input type="text" id="prenom" class="form-control no-edit" value="{% if intervention.client.prenom is defined %}{{intervention.client.prenom}} {% endif %}" aria-label="Prenom" aria-describedby="basic-addon1">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div id="resultat_client"></div>
+			<div class="col-md-7">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width:100%">Adresse</span>
+					<textarea class="form-control no-edit" id="adresse" aria-label="Adresse" aria-describedby="basic-addon1" style="width:100%" rows="2">
+						{% if intervention.client.adresse is defined %}
+							{{intervention.client.adresse}}
+						{% endif %}
+					</textarea>
+				</div>
+			</div>
+			<div class="col-md-5">
+
+				<div class="col-md-12">
+					<div class="input-group mb-3 mx-1">
+						<span class="input-group-text" id="basic-addon1">Téléphone</span>
+						<input type="text" id="telephone" class="form-control no-edit" value="{% if intervention.client.telephone is defined %}{{intervention.client.telephone}} {% endif %}" aria-label="Nom" aria-describedby="basic-addon1">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="input-group mb-3 mx-1">
+						<span class="input-group-text" id="basic-addon1">Mail</span>
+						<input type="text" id="mail" class="form-control no-edit" value="{% if intervention.client.mail is defined %}{{intervention.client.mail}} {% endif %} " aria-label="Prenom" aria-describedby="basic-addon1">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="d-flex">
+				<div class="input-group mb-3 mx-1 w-50">
+					<span class="input-group-text" id="basic-addon1">Code postal</span>
+					<input type="text" id="codepostal" class="form-control no-edit " value="{% if intervention.client.codepostal is defined %}{{intervention.client.codepostal}} {% endif %} " aria-label="Username" aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text" id="basic-addon1">Ville</span>
+					<input type="text" id="ville" class="form-control no-edit" value="{% if intervention.client.ville is defined %}{{intervention.client.ville}} {% endif %}" aria-label="Username" aria-describedby="basic-addon1">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 mx-auto mt-3">
+				<h5>
+					<b>Matériel</b>
+				</h5>
+			</div>
+			<div id="list_materiel" style="border:solid 1px grey; height:28vh; top: 5rem; margin-top:3rem;position:absolute; z-index:-50; background-color:white; width:99%">
+				<div class="alert alert-primary mt-2">Liste des matériels en place chez le client</div>
+				<div id="materiels"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 d-flex">
+				<div class="d-flex flex-column">
+
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="">Marque</span>
+						{% if form.materiel is defined %}
+							{{form_widget(form.materiel)}}
+							<input id="marque_materiel-search" type="text" class="form-control  no-edit data_materiel" value="{% if intervention.materiel.materieltype.marque is defined %}{{intervention.materiel.materieltype.marque}} {% endif %}" aria-label="Username" aria-describedby="basic-addon1">
+						{% else %}
+							<input id="marque_materiel" type="text" class="form-control " value="{% if intervention.materiel.materieltype.marque is defined %}{{intervention.materiel.materieltype.marque}} {% endif %}" aria-label="Username" aria-describedby="basic-addon1">
+						{% endif %}
+					</div>
+
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1">Catégorie</span>
+						<input id="categorie_materiel" type="text" class="form-control no-edit data_materiel" value="{% if intervention.materiel.materieltype.categorie is defined %}{{intervention.materiel.materieltype.categorie}} {% endif %}" aria-label="Compteur" aria-describedby="basic-addon1">
+					</div>
+
+				</div>
+
+				<div class="col-md-6 d-flex flex-column">
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1">Modèle</span>
+						<input id="modele_materiel" type="text" class="form-control  no-edit data_materiel" value="{% if intervention.materiel.materieltype.modele is defined %}{{intervention.materiel.materieltype.modele}} {% endif %}" aria-label="Username" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1">Matricule</span>
+						<input id="matricule_materiel" type="text" class="form-control  no-edit data_materiel" value="{% if intervention.materiel.matricule is defined %}{{intervention.materiel.matricule}} {% endif %}" aria-label="Username" aria-describedby="basic-addon1">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card">
+
+					<div class="card-header">
+						<b>Documents</b>
+					</div>
+					<div class="card-body" style="padding:0.6rem 1rem">
+						{% if intervention.materiel.materieltype is defined %}
+							<span data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-primary" data-document="{{intervention.materiel.materieltype.document}}" id="document">{{intervention.materiel.materieltype.documentTitre}}</span>
+						{% endif %}-
+						{% if intervention.materiel.materieltype is defined %}
+							<span data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-primary" data-photo="{{intervention.materiel.materieltype.photo}}" id="photo">{{intervention.materiel.materieltype.photoTitre}}
+							</span>
+						{% endif %}
+					</div>
+				</div>
+
+			</div>
+
+
+		</div>
+		<div class="row mt-3">
+			<div class="col-md-6">
+				<div class="input-group">
+					<span class="input-group-text w-100" id="basic-addon1">Symptômes</span>
+				</div>
+				{% if form is defined %}
+					{{form_widget(form.symptome)}}
+				{% else %}
+					<textarea class="form-control " name="" id="" cols="10" rows="10" placeholder="Descriptions des problèmes">
+						{% if intervention.symptome is defined %}
+							{{intervention.symptome }}
+						{% endif %}
+					</textarea>
+				{% endif %}
+			</div>
+			<div class="col-md-6">
+				<div class="input-group ">
+					<span class="input-group-text" id="basic-addon1">Tavaux réalisé le:</span>
+					<input type="text" class="form-control no-edit" value=" " aria-label="Username" aria-describedby="basic-addon1">
+					<span class="input-group-text" id="basic-addon1">Compteur</span>
+					<input type="text" class="form-control no-edit" value="{% if intervention.compteur is defined %} {{intervention.compteur}} {% endif %} " aria-label="Username" aria-describedby="basic-addon1">
+				</div>
+				<textarea class="form-control no-edit" name="" id="" cols="30" rows="10" placeholder="Détails des travaux">
+					{% if intervention.travaux is defined %}
+						{{intervention.travaux }}
+					{% endif %}
+				</textarea>
+			</div>
+		</div>
+	</div>
+	<div class="card-footer d-flex justify-content-end">
+		<div>
+			{% if form is defined %}
+				{{form_widget(form.enregistrer,{'label': enregistrer_label|default('Enregister')})}}
+			{% else %}
+				{% if intervention.id is defined %}
+					<a href="{{url('intervention_edit',{'id':intervention.id})}}" class="btn btn-sm btn-primary">Editer</a>
+				{% endif %}
+			{% endif %}
+			{% if form is defined %}
+				{{form_end(form)}}
+			{% endif %}
+			{% if intervention.id is defined and intervention.id!='' %}
+				{{ include('intervention/_delete_form.html.twig') }}
+			{% endif %}
+		</div>
+	</div>
+</div></div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <object  id="object" style="height:65vh" width="100%"  data="">
+    </object>
+	  
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% block javascript %}
+<script src={{ asset('js/intervention.js') }}></script>{% endblock %}

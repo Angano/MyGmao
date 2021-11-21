@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Intervention index{% endblock %}
+
+{% block body %}
+   	<div class="row">
+		<div class="col-md-5 mx-auto mb-5">
+			<h1>
+				<u>Liste des interventions</u>
+			</h1>
+		</div>
+		<div id="knp_search" class="col-md-6 mt-5 d-flex justify-content-start" style="align-items:baseline; position:relative">
+			<b style="font-size:1.3rem; padding-right:1rem">Filtrer par:</b>
+			{{ knp_pagination_filter(interventions,{'client':'Client','materiel':'Materiel', 'technicien':'Technicien'}) }}
+			<div id="resultat-client" style="position:absolute; width:inherit; top:2rem; padding-bottom:1rem;"></div>
+		</div>
+	</div>
+	<div class="row" style="min-height:60vh">
+   <div class="col-md-11 mx-auto">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Technicien</th>
+                <th>Client</th>
+                <th>Matériel</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th></th>
+          
+            </tr>
+        </thead>
+        <tbody>
+        {% for intervention in interventions %}
+            <tr>
+                <td>{{ intervention.id }}</td>
+                <td>{{intervention.technicien.nom}} {{intervention.technicien.prenom}}</td>
+                <td>{{ intervention.client.societe }} - {{ intervention.client.nom }}</td>
+                <td>{{ intervention.materiel.materieltype.marque }} - {{ intervention.materiel.materieltype.modele }} - {{intervention.materiel.matricule}}</td>
+                <td>{{ intervention.date ? intervention.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ intervention.status ? '✅' : 'En cours' }}</td>
+            
+                <td>
+                    <a class="btn btn-sm btn-primary" href="{{ path('intervention_show', {'id': intervention.id}) }}">Détail</a>
+                    <a class="btn btn-sm btn-primary" href="{{ path('intervention_edit', {'id': intervention.id}) }}">Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+	
+
+    <div class="row mb-4">
+
+		<div class=" col-md-4 offset-md-4" id="pagination_nav">
+
+			{{ knp_pagination_render(interventions) }}
+
+
+		</div>
+		<div class="col-md-4 mx-auto text-center ">
+
+			<a class="btn btn-sm btn-primary" href="{{ path('intervention_new') }}">Nouvelle intervention</a>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{asset('js/interventions.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,159 @@
+{% if form is defined %}
+	{{ form_errors(form) }}
+	{{form_start(form)}}
+	{{form_start(form)}}
+	{{ form_row(form._token) }}
+	{{ form_row(formprofil._token) }}
+{% endif %}
+{% block  stylesheets %}
+<style>
+#resultat_metier{
+	background-color:white;
+	position:absolute;
+	top:2.5rem;
+	width:100%;
+
+	border: solid 1px grey;
+	
+	z-index:-15;
+}
+
+#resultat_metier li{
+	padding-left:5.5rem;
+}
+.retour_metier:hover{
+	cursor: pointer;
+	background-color:#d8dbdf;
+}
+</style>
+
+{% endblock %}
+
+
+<div class="card " style="border-bottom:none">
+	<div class="alert-primary card-header h5" >
+		<b>
+			{% if titre is defined %}
+				{{titre}}
+			{% endif %}
+		</b>
+
+	</div>
+	<div class="card-body my-4">
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text" id="basic-addon1">Nom</span>
+					{% if form is defined %}
+						{{form_widget(formprofil.nom)}}
+
+					{% else %}
+						<input type="text" class="form-control" style="background-color:rgb(238, 216, 216);" id="nom" value="{% if client.nom is defined %}{{client.nom}} {% endif %}" aria-label="Nom" aria-describedby="basic-addon1">
+					{% endif %}
+				</div>
+
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text">Prénom</span>
+					{% if form is defined %}
+						{{form_widget(formprofil.prenom)}}
+
+					{% else %}
+						<input type="text" id="prenom" class="form-control no-edit" value="{% if client.prenom is defined %}{{client.prenom}} {% endif %}" aria-label="Prenom" aria-describedby="basic-addon1">
+					{% endif %}
+				</div>
+
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text " id="basic-addon1">Email</span>
+					{% if form is defined %}
+						{{form_widget(form.email)}}
+
+					{% else %}
+
+						<input type="text" class="form-control" value="{% if client.email is defined %} {{client.email }} {% endif %}" aria-label="email" aria-describedby="basic-addon1">
+					{% endif %}
+
+				</div>
+
+
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text " id="basic-addon1">Métier</span>
+					{% if formprofil is defined %}
+						{{form_widget(formprofil.metier)}}
+						<div id="resultat_metier">
+						
+						</div>
+						<span class="input-group-text" id="list_metier">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+                            </svg>
+                        </span>
+
+					{% else %}
+
+					{% endif %}
+
+				</div>
+
+
+			</div>
+<div class="col-md-4">
+
+				<div class="input-group mb-3 mx-1" style="height:100%">
+					<span class="input-group-text " id="basic-addon1">Role</span>
+					{% if form is defined %}
+						{{form_widget(form.roles)}}
+
+					{% else %}
+
+					{% endif %}
+
+				</div>
+			</div>
+
+			<div class="col-md-4">
+
+				
+					{% if form.password is defined %}
+					<div class="input-group mb-3 mx-1">
+					<span class="input-group-text " id="basic-addon1">Password</span>
+						{{form_widget(form.password)}}
+</div>
+					{% else %}
+
+					{% endif %}
+
+				
+			</div>
+
+		</div>
+
+		<div class="row">
+
+
+			
+		</div>
+
+
+	</div>
+
+	<div class="card-footer d-flex justify-content-start mx-3 mt-5" style="background-color:transparent;">
+		<a class="btn btn-sm btn-primary mx-1" href="{{ path('user_index') }}">Retour à la liste</a>
+		{{form_widget(form.submit)}}
+		{% if user.id is not null %}
+			{{ include('user/_delete_form.html.twig') }}
+		{% endif %}
+
+
+		<div>
+			{% if form is defined %}{% endif %}
+		</div>
+	</div>
+
+
+</div>
+{{form_end(form,{'render_rest':false})}}
+
+{% block javascripts %}
+	<script src="{{asset('js/profil.js')}}"></script>
+{% endblock %}

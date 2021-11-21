@@ -1,0 +1,181 @@
+{% if form is defined %}
+	{{ form_errors(form) }}
+	{{form_start(form)}}
+	{{ form_row(form._token) }}
+{% endif %}
+
+{% block stylesheets %}{% endblock %}
+
+
+<div class="card">
+	<div class="alert-primary card-header h5">
+		<b>
+			{% if titre is defined %}
+				{{titre}}
+			{% endif %}
+		</b>
+
+	</div>
+	<div class="card-body">
+
+		<div class="row">
+			<div class="col-md-4">
+
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text " id="basic-addon1">Société</span>
+					{% if form is defined %}
+						{{form_widget(form.societe)}}
+
+					{% else %}
+
+						<input type="text" class="form-control" value="{% if client.societe is defined %} {{client.societe }} {% endif %}" aria-label="Societe" aria-describedby="basic-addon1">
+					{% endif %}
+
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text" id="basic-addon1">Nom</span>
+					{% if form is defined %}
+						{{form_widget(form.nom)}}
+
+					{% else %}
+						<input type="text" class="form-control" id="nom" value="{% if client.nom is defined %}{{client.nom}} {% endif %}" aria-label="Nom" aria-describedby="basic-addon1">
+					{% endif %}
+				</div>
+
+			</div>
+			<div class="col-md-4">
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text">Prénom</span>
+					{% if form is defined %}
+						{{form_widget(form.prenom)}}
+
+					{% else %}
+						<input type="text" id="prenom" class="form-control no-edit" value="{% if client.prenom is defined %}{{client.prenom}} {% endif %}" aria-label="Prenom" aria-describedby="basic-addon1">
+					{% endif %}
+				</div>
+			</div>
+
+
+		</div>
+
+		<div class="row">
+			<div class="col-md-7">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width:100%">Adresse</span>
+					{% if form is defined %}
+						{{form_widget(form.adresse)}}
+
+					{% else %}
+						<textarea class="form-control no-edit" id="adresse" aria-label="Adresse" aria-describedby="basic-addon1" style="width:100%" rows="2">{% if client.adresse is defined %}{{client.adresse}}{% endif %}</textarea>
+					{% endif %}
+				</div>
+			</div>
+			<div class="col-md-5">
+
+				<div class="col-md-12">
+					<div class="input-group mb-3 mx-1">
+						<span class="input-group-text" id="basic-addon1">Téléphone</span>
+						{% if form is defined %}
+							{{form_widget(form.telephone)}}
+
+						{% else %}
+							<input type="text" id="telephone" class="form-control no-edit" value="{% if client.telephone is defined %}{{client.telephone}} {% endif %}" aria-label="Nom" aria-describedby="basic-addon1">
+						{% endif %}
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="input-group mb-3 mx-1">
+						<span class="input-group-text" id="basic-addon1">Mail</span>
+						{% if form is defined %}
+							{{form_widget(form.mail)}}
+
+						{% else %}
+							<input type="text" id="mail" class="form-control no-edit" value="{% if client.mail is defined %}{{client.mail}} {% endif %} " aria-label="Prenom" aria-describedby="basic-addon1">
+						{% endif %}
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div class="row">
+
+
+			<div class="d-flex">
+				<div class="input-group mb-3 mx-1 w-50">
+					<span class="input-group-text" id="basic-addon1">Code postal</span>
+					{% if form is defined %}
+						{{form_widget(form.codepostal)}}
+
+					{% else %}
+						<input type="text" id="codepostal" class="form-control no-edit " value="{% if client.codepostal is defined %}{{client.codepostal}} {% endif %} " aria-label="Username" aria-describedby="basic-addon1">
+					{% endif %}
+				</div>
+				<div class="input-group mb-3 mx-1">
+					<span class="input-group-text" id="basic-addon1">Ville</span>
+					{% if form is defined %}
+						{{form_widget(form.ville)}}
+
+					{% else %}
+						<input type="text" id="ville" class="form-control no-edit" value="{% if client.ville is defined %}{{client.ville}} {% endif %}" aria-label="Username" aria-describedby="basic-addon1">
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+
+			<div class="col-md-7">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width:100%">Informations complémentaires</span>
+					{% if form is defined %}
+						{{form_widget(form.information)}}
+
+					{% else %}
+						<textarea class="form-control no-edit" id="adresse" aria-label="Adresse" aria-describedby="basic-addon1" style="width:100%" rows="2">{% if client.information is defined %}{{client.information}}{% endif %}</textarea>
+					{% endif %}
+				</div>
+			</div>
+		</div></div>
+	
+			<div class="card-footer d-flex justify-content-end">
+				
+				{% if edit is defined and edit==true %}
+					<div>
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-sm btn-primary mx-1 " data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Voir la liste des matériel installés
+					</button>
+
+				</div>
+				{% endif %}
+				
+				<div>
+					{% if form is defined %}
+						{{form_widget(form.enregistrer,{'label': enregistrer_label|default('Enregistrer')})}}
+					{% else %}
+						{% if client.id is defined %}
+							{{ include('client/_delete_form.html.twig') }}
+
+							<a href="{{url('client_edit',{'id':client.id})}}" class="btn btn-sm btn-success">Editer</a>
+						{% endif %}
+					{% endif %}
+					{% if form is defined %}
+						{{form_end(form)}}
+					{% endif %}
+				</div>
+			</div>
+		
+	
+
+</div>
+
+{% block javascript %}
+	<script src={{ asset('js/intervention.js') }}></script>
+
+{% endblock %}

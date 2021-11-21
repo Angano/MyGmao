@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Interventions
+{% endblock %}
+
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-md-3 mx-auto">
+			<h3>
+				<u>{{titre_u}}</u>
+			</h3>
+		</div>
+	
+		<div id="knp_search" class="col-md-8 mt-5 d-flex justify-content-start" style="align-items:baseline; position:relative">
+			<b style="font-size:1.3rem; padding-right:1rem">Filtrer par:</b>
+			{{ knp_pagination_filter(jobs,{'client':'Client','technicien':'Technicien','materiel':'Materiel'}) }}
+			<div id="resultat-client" style="position:absolute; width:inherit; top:2rem; padding-bottom:1rem;"></div>
+		</div>
+	</div>
+	<div class="row" style="min-height:60vh">
+   <div class="col-md-11 mx-auto">
+		{% if jobs %}
+
+
+			<table class="table">
+				<thead>
+					<th>Intervention N°</th>
+					<th>Technicien</th>
+					<th>Client
+						<span style="font-weight:normal; font-size:0.8rem">Société - Nom prénom</span>
+					</th>
+					<th>Date</th>
+					<th>Matériel</th>
+					<th>Status</th>
+				</thead>
+			</tr>
+		</thead>
+		<tbody>
+			{% for job in jobs %}
+				<tr>
+					<td>
+						<a href="{{url('job_edit',{'id':job.id})}}">N°{{job.id}}</a>
+					</td>
+					<td>{{job.technicien.nom}}
+						-
+						{{job.technicien.prenom}}</td>
+					<td>{{job.client.societe}}
+						-
+						{{job.client.nom}}
+						{{job.client.prenom}}</td>
+					<td>{{job.date|date('m-d-Y')}}</td>
+					<td>{{job.materiel.materieltype.marque}}
+						{{job.materiel.materieltype.modele}}
+						<u>Mat:</u>
+						{{job.materiel.matricule}}</td>
+					 <td>{{ job.status ? '✅' : 'En cours' }}</td>
+            
+            </td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+
+	</table>
+
+{% else %}
+	<h4>Pas de travaux !</h4>
+{% endif %}</div></div></div>
+
+<div class="row mb-4"><div class=" col-md-4 offset-md-4" id="pagination_nav">
+
+{{ knp_pagination_render(jobs) }}</div></div>{% endblock %}
+
+{% block javascripts %}
+<script src="{{asset('js/interventions.js')}}"></script>
+{% endblock %}

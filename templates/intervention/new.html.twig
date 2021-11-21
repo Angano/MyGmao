@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Intervention{% endblock %}
+
+{% block body %}
+   
+
+    {{ include('intervention/_form.html.twig', {'titre': 'Nouvelle intervention', 'enregistrer_label':'Enregistrer'})  }}
+
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        
+        $('.no-edit').attr('readonly','true').css('background-color','rgb(220, 226, 236)').css('color','rgb(39, 16, 57)')
+     
+         $( function() {
+            $( "#intervention_date" ).datepicker({
+                dateFormat:"dd-mm-yy"
+            });
+        
+        } );
+  
+    })
+    </script>
+{% endblock %}

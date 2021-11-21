@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
+		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+		<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+
+		<link
+		rel="icon" type="image/x-icon" href="{{asset('assets/fond.ico')}}"/>
+		<!-- Core theme CSS (includes Bootstrap)-->
+		<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
+		<link href="{{asset('css/base.css')}}" rel="stylesheet"/>
+		<style>
+		
+		</style>
+
+		<!--font google -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet"> 
+
+		{# Run `composer require symfony/webpack-encore-bundle`	and uncomment the following Encore helpers to start using Symfony UX #}
+		{% block stylesheets %}
+			{#{{ encore_entry_link_tags('app') }}#}
+		{% endblock %}
+
+
+	</head>
+	<body>
+	{% set route = app.request.attributes.get('_route') %}
+	{% set tab_client = ['client_new','client_index'] %}
+	{% set tab_materieltype = ['materieltype_new','materieltype_index'] %}
+	{% set tab_materiel = ['materiel_index','materiel_new'] %}
+	{% set tab_intervention = ['intervention_index','intervention_new'] %}
+	{% set tab_utilisateur = ['user_index','user_new'] %}
+	{% set tab_manager = ['jobs_index','intervention_new'] %}
+	
+		<div
+			class="d-flex" id="wrapper">
+			<!-- Sidebar-->
+			<div class="border-end  " style="  background-color:#e9ecef" id="sidebar-wrapper">
+				<div class="sidebar-heading border-bottom mt-1 d-flex justify-content-between" style="  background-color:#e9ecef;">
+					<div>
+						<img height="65" style="position:absolute;top:0px; left:3px" src="{{asset('assets/fond.png')}}" alt="">
+					</div>
+					<h1 style="color:black; font-weight:bold;font-family: 'Indie Flower', cursive;">My Gmao!</h1>
+				</div>
+				<div class="list-group list-group-flush" style="  background-color:#e9ecef">
+					<ul style="list-style:none; margin-top:1rem">
+					{% if is_granted('ROLE_USER') %}
+							<li class="menu_item_space">Mon espace
+								<ul>
+									<li style="list-style:none">
+										<a href="{{url('profil')}}">
+											{% if app.user.technicien %}
+												&#128522;
+												{{app.user.technicien.nom}}
+												{{app.user.technicien.prenom}}
+											{% endif %}
+										</a>
+									</li>
+									<li>
+										<a href="{{url('myjobs')}}">Mes tâches</a>
+									</li>
+								</ul>
+							</li>
+							<hr style="margin-left:-2rem">
+						{% endif %}
+						{% if is_granted('ROLE_MANAGER') %}
+							<li class="menu_item">Manager
+								<ul {% if route in tab_manager %} class="d-block" {% endif %}>
+									<li><a {{ route=='jobs_index' ? 'class="active"' }} href="{{url('jobs_index')}}">Suivi des interventions</a></li>
+								</ul>
+							</li>
+		<hr style="margin-left:-2rem">
+							<li class="menu_item">Client
+								<ul {% if route in tab_client %} class="d-block" {% endif %}>
+									<li><a {{ route=='client_index' ? 'class="active"' }} href="{{url('client_index')}}">Clients</a></li>
+									<li><a {{ route=='client_new' ? 'class="active"' }} href="{{url('client_new')}}">Ajout</a></li>
+
+								</ul>
+							</li>
+							
+							<hr style="margin-left:-2rem">
+
+							<li class="menu_item">Matériel
+								<ul {% if route in tab_materiel %} class="d-block" {% endif %}>
+									<li><a {{ route=='materiel_index' ? 'class="active"' }} href="{{url('materiel_index')}}">Materiels sur site</a></li>
+									<li><a {{ route=='materiel_new' ? 'class="active"' }} href="{{url('materiel_new')}}">Ajout</a></li>
+
+								</ul>
+							</li>
+							<hr style="margin-left:-2rem">
+							<li class="menu_item">Intervention
+								<ul  {% if route in tab_intervention %} class="d-block" {% endif %}>
+									<li><a {{ route=='intervention_index' ? 'class="active"' }} href="{{url('intervention_index')}}">Interventions</a></li>
+									<li><a {{ route=='intervention_new' ? 'class="active"' }} href="{{url('intervention_new')}}">Ajout</a></li>
+
+								</ul>
+							</li>
+
+<hr style="margin-left:-2rem">
+							<li class="menu_item"><span id="title-ul">Matériels de référence</span>	
+							
+							
+								<ul {% if route in tab_materieltype %} class="d-block" {% endif %}>
+									<li><a  {{ route=='materieltype_index' ? 'class="active"' }}  href="{{url('materieltype_index')}}">Matériels de référence</a></li>
+									<li><a {{ route=='materieltype_new' ? 'class="active"' }} href="{{url('materieltype_new')}}">Ajout</a></li>
+
+								</ul>
+							</li>
+							<hr style="margin-left:-2rem">
+						{% endif %}
+						{% if is_granted('ROLE_ADMIN') %}
+							<li class="menu_item">Utilisateur
+								<ul {% if route in tab_utilisateur %} class="d-block" {% endif %}>
+									<li><a {{ route=='user_index' ? 'class="active"' }} href="{{url('user_index')}}">Utilisateurs</a></li>
+									<li><a {{ route=='user_new' ? 'class="active"' }} href="{{url('user_new')}}">Ajout</a></li>
+
+								</ul>
+							</li>
+
+							<hr style="margin-left:-2rem">
+						{% endif %}
+			
+
+						
+					</ul>
+				</div>
+			</div>
+			<!-- Page content wrapper-->
+			<div
+			app.request.attributes.get('_internal')
+				id="page-content-wrapper">
+				<!-- Top navigation-->
+				<nav class="navbar navbar-expand-lg navbar-light border-bottom " style="  background-color:#e9ecef;padding:1rem 0px">
+					<div class="container-fluid " style="max-width:100%">
+						<button class="btn btn-secondary btn-sm" id="sidebarToggle">Toggle Menu</button>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav ms-auto mt-2 mt-lg-0" style="  background-color:#e9ecef">
+								{% if is_granted('ROLE_USER') %}
+									<form class="d-flex">
+										<button class="btn btn-sm btn-secondary " type="submit">Search</button>
+										<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" data-bs-toggle="modal" data-bs-target="#searchModal">
+									</form>
+									<li class="nav-item ">
+										<a class="nav-link" style="  background-color:#e9ecef" href="{{url('home')}}">Home</a>
+									</li>
+
+
+									<li class="nav-item">
+										<a class="nav-link" style="  background-color:#e9ecef" href="{{url('app_logout')}}">Logout</a>
+									</li>
+								{% else %}
+									<li class="nav-item">
+										<a class="nav-link" style="  background-color:#e9ecef" href="{{url('app_login')}}">Login</a>
+									</li>
+								{% endif %}
+
+
+								<li class="nav-item">
+									<a class="nav-link" style="  background-color:#e9ecef" href="{{url('app_register')}}">Register</a>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<!-- Page content-->
+				<div class="container-fluid block-contain" style="margin:0px;padding:0px;">
+					{% for message in app.flashes('success') %}
+						<div class="row">
+							<div class="col-md-10 mx-auto">
+								<div class="alert alert-success">
+									{{ message }}
+								</div>
+
+							</div>
+
+						</div>
+					{% endfor %}
+					{% for message in app.flashes('error') %}
+						<div class="row">
+							<div class="col-md-10 mx-auto">
+								<div class="alert alert-danger">
+									{{ message }}
+								</div>
+
+							</div>
+
+						</div>
+					{% endfor %}
+					{% block body %}{% endblock %}
+
+				</div>
+			</div>
+
+		</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img width="100%" src="{{asset('assets/en-construction.jpg')}}" alt="">
+      </div>
+    
+    </div>
+  </div>
+</div>
+
+		<div class=" py-3 mx-auto text-center" style=" background-color: #e9ecef;border: solid 1px #b6b9bc;background-color:#e9ecef">
+			<h6 style="color:black; font-weight:bold;font-family: 'Indie Flower', cursive;">Développé par Matthieu Duprat</h6>
+		</div>
+
+		<!-- Bootstrap core JS-->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Core theme JS-->
+		<script src="{{asset('js/scripts.js')}}"></script>
+		<script src="{{asset('js/base.js')}}"></script>
+		
+			{% block javascripts %}
+			{% endblock %}
+		</body></hhtml>

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+       	<div class="row">
+		<div class="col-md-11 mx-auto mb-5">
+			<h1><u>Liste des Utilisateurs</u></h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-11 mx-auto">
+
+    <table class="table">
+        <thead>
+            <tr>
+            
+                <th>Email</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                 <th>Métier</th>
+                
+                <th></th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                
+                <td>{{ user.email }}</td>
+                <td>{{ user.technicien? user.technicien.nom: '' }}</td>
+                <td>{{ user.technicien? user.technicien.prenom: '' }}</td>
+                <td>{{ user.technicien? user.technicien.metier: '' }}</td>
+                
+            
+                <td>
+                    <a class="btn btn-sm btn-primary"  href="{{ path('user_show', {'id': user.id}) }}">Détail</a>
+                    <a class="btn btn-sm btn-primary" href="{{ path('user_edit', {'id': user.id}) }}">Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+
+    	<div class="row">
+		<div class="col-md-11 mx-auto mt-3">
+    <a class="btn btn-sm btn-primary" href="{{ path('user_new') }}">Nouvelle utilisateur</a>
+    </div>
+    </div>
+
+
+{% endblock %}

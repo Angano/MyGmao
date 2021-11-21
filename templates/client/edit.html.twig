@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition d'un client{% endblock %}
+
+{% block body %}
+   
+    {{ include('client/_form.html.twig', {'titre':'Edition d\'un client','enregistrer_label': 'Mettre à jour'}) }}
+
+    
+{% endblock %}

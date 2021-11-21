@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition d'une intervention
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+    .nav-link:hover{
+        cursor:pointer;
+        background-color:#cfe2ff;
+        color:white;}
+
+        </style>
+{% endblock %}
+
+{% block body %}
+
+	
+		{{ include('intervention/_form.html.twig', {'titre':'Edition d\'une intervention','enregistrer_label': 'Mettre à jour'}) }}
+   
+</div>
+    
+
+   
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        
+        $('.no-edit').attr('readonly','true').css('background-color','#d8dbdf').css('color','#0054a8')
+
+        
+    $( function() {
+        $( "#intervention_date" ).datepicker({
+            dateFormat:"dd-mm-yy"
+        });
+    
+    } );
+
+  
+    })
+</script>
+
+{% endblock %}

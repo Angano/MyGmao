@@ -1,0 +1,195 @@
+{% if form is defined %}
+	{{ form_errors(form) }}
+	{{form_start(form)}}
+	{{ form_row(form._token) }}
+{% endif %}
+{% block  stylesheets %}
+<style>
+#resultat_marque, #resultat_categorie{
+	background-color:white;
+	position:absolute;
+	top:2.5rem;
+	width:100%;
+
+	border: solid 1px grey;
+	
+	z-index:-15;
+}
+#resultat_marque li, #resultat_categorie li{
+	padding-left:5.5rem;
+}
+.retour_marque:hover, .retour_categorie:hover{
+	cursor: pointer;
+	background-color:#d8dbdf;
+}
+
+</style>
+
+{% endblock %}
+
+
+<div class="card  " style="border-bottom:none">
+	<div class="alert-primary card-header h5 mb-3">
+		<b>
+			{% if titre is defined %}
+				{{titre}}
+			{% endif %}
+		</b>
+	</div>
+	<div class="card-body row justify-content-around ">
+		<div class="col-md-5 px-0">
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="basic-addon1">Marque</span>
+				{% if form is defined %}
+					{{ form_widget(form.marque) }}
+					<span class="input-group-text" id="list_marque">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+                            </svg>
+                        </span>
+				{% else %}
+					<input type="text" autocomplete="off" class="form-control" value="{{materieltype.marque}}" aria-label="Username" aria-describedby="basic-addon1">
+				{% endif %}
+				<div id="resultat_marque"></div>
+			</div>
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="basic-addon1">Catégorie</span>
+				{% if form is defined %}
+					{{form_widget(form.categorie)}}
+					<span class="input-group-text" id="list_categorie">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+                            </svg>
+                        </span>
+				{% else %}
+					<input type="text" class="form-control" value="{{materieltype.categorie}}" aria-label="Username" aria-describedby="basic-addon1">
+				{% endif %}
+				<div id="resultat_categorie"></div>
+			</div>
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="basic-addon1">Modèle</span>
+				{% if form is defined %}
+					{{ form_widget(form.modele,{'attr':{'placeholder':'Modèle'}}) }}
+					
+				{% else %}
+					<input type="text" class="form-control" value="{{materieltype.modele}}" aria-label="Username" aria-describedby="basic-addon1">
+				{% endif %}
+			</div>
+
+			<div class="card">
+				<span class="card-header text-start">Description</span>
+				{% if form is defined %}
+					{{form_widget(form.description)}}
+				{% else %}
+					<textarea rows="7" class="form-control" aria-label="Username" aria-describedby="basic-addon1">{{materieltype.description}}</textarea>
+				{% endif %}
+
+			</div>
+
+		</div>
+		<div class="card col-md-3 px-0">
+			<h5 class="card-header">Photo</h5>
+			<div class="card-body">
+				{% if form is defined %}
+				<p>{{form_row(form.photo_titre)}}</p>
+				<p>{{form_row(form.photo_description)}}</p>
+				{% if materieltype.photo != '' %}
+
+						<a href="/upload/{{materieltype.photo}}" target="_blank">
+							<img src="/upload/{{materieltype.photo}}" width="100%" alt=""></a>
+					{% endif %}
+					<p>{{form_row(form.photo)}}</p>
+				{% else %}
+					<h5 class="card-title">{{materieltype.photoTitre}}</h5>
+
+
+					<p class="card-text">{{materieltype.photoDescription}}</p>
+					{% if materieltype.photo != '' %}
+
+						<a href="/upload/{{materieltype.photo}}" target="_blank">
+							<img src="/upload/{{materieltype.photo}}" width="100%" alt=""></a>
+					{% endif %}
+
+				{% endif %}
+
+			</div>
+			
+		</div>
+		<div class="card col-md-3 px-0">
+			<h5 class="card-header">Document</h5>
+			<div class="card-body">
+				{% if form is defined %}
+				<p>{{form_row(form.document_titre)}}</p>
+				<p>{{form_row(form.document_description)}}</p>
+					<p>{{form_row(form.document)}}</p>
+					
+				{% else %}
+					<h5 class="card-title">{{materieltype.documentTitre}}</h5>
+					<p class="card-text">{{materieltype.documentDescription}}</p>
+					{% if materieltype.document != '' and materieltype.document !='upload' %}
+
+					<button id="document" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-href="{{materieltype.document}}">
+					{{materieltype.documentTitre}}.pdf</button>
+					{% endif%}
+					{% endif %}
+					
+
+
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<div class="card-footer d-flex justify-content-end mt-5 mx-4" style="padding: 0.5rem ">
+			
+			<div>
+				{% if form is defined %}
+					{{form_widget(form.enregistrer,{'label': enregistrer_label|default('Enregistrer')})}}
+				{% else %}
+					{% if materieltype.id is defined %}
+
+						<a href="{{url('materieltype_edit',{'id':materieltype.id})}}" class="btn btn-sm btn-primary">Editer</a>
+					{% endif %}
+				{% endif %}
+				{% if form is defined %}
+					{{form_end(form)}}
+				{% endif %}
+				{% if materieltype.id is defined and materieltype.id!='' %}
+					{{ include('materieltype/_delete_form.html.twig') }}
+				{% endif %}
+
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{materieltype.documentTitre}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <object  id="object" style="height:65vh" width="100%"  data="">
+    </object>
+	  
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block javascript %}
+	<script src={{ asset('js/materielType.js') }}></script>
+
+{% endblock %}

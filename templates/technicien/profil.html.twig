@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="row">
+    <div class="col-md-10 mx-auto">
+    <table>
+        <tr><th>Nom</th><td>{{profil.technicien.nom}}</td></tr>
+        <tr><th>Prénom</th><td>{{profil.technicien.prenom}}</td></tr>
+        <tr><th>Métier</th><td>{{profil.technicien.metier}}</td></tr>
+        <tr><th>Roles</th><td>{{profil.roles|json_encode()}}</td></tr>
+        <tr><th>Email</th><td>{{profil.email}}</td></tr>
+
+    </table>
+ 
+ <a href="{{url('edit_profil')}}" class="btn btn-sm btn-primary">Editer</a>
+      <a href="{{url('update_password')}}" class="btn btn-primary btn-sm">Changer le mot de passe</a>
+
+
+
+    </div></div>
+{% endblock %}

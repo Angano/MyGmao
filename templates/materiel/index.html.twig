@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Materiels sur site
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="row">
+		<div class="col-md-4 mx-auto mb-5">
+			<h1>
+				<u>Materiels sur site</u>
+			</h1>
+		</div>
+		<div id="knp_search" class="col-md-7 mt-5 d-flex justify-content-start" style="align-items:baseline; position:relative">
+			<b style="font-size:1.3rem; padding-right:1rem">Filtrer par:</b>
+			{{ knp_pagination_filter(materiels,{'client':'Client','materiel':'Materiel', 'categorie':'Catégorie'}) }}
+			<div id="resultat-client" style="position:absolute; width:inherit; top:2rem; padding-bottom:1rem;"></div>
+		</div>
+	</div>
+
+	<div class="row" style="min-height:60vh">
+		<div class="col-md-11 mx-auto">
+			<table class="table">
+
+				<thead>
+
+					<tr>
+						<th>Société</th>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Matériel</th>
+						<th>Catégorie</th>
+						<th>Matricule</th>
+
+						<th> </th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for materiel in materiels %}
+						<tr>
+							<td>{{materiel.client.societe}}</td>
+							<td>{{materiel.client.nom}}</td>
+							<td>{{materiel.client.prenom}}</td>
+							<td>{{ materiel.materieltype.marque }}
+								{{materiel.materieltype.modele}}
+							</td>
+							<td>{{materiel.materieltype.categorie}}</td>
+							<td>{{ materiel.matricule }}</td>
+
+							<td>
+								<a class="btn btn-sm btn-primary" href="{{ path('materiel_show', {'id': materiel.id}) }}">Détail</a>
+								<a class="btn btn-sm btn-primary" href="{{ path('materiel_edit', {'id': materiel.id}) }}">Editer</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="4">aucun résultas trouvés</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+
+			</table>
+		</div>
+	</div>
+	<div class="row mb-4">
+
+		<div class=" col-md-4 offset-md-4" id="pagination_nav">
+
+			{{ knp_pagination_render(materiels) }}
+
+
+		</div>
+		<div class="col-md-4 mx-auto text-center ">
+
+			<a class="btn btn-sm btn-primary" href="{{ path('materiel_new') }}">Nouveau matériel sur site</a>
+		</div>
+	</div>
+
+
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('js/materielsSurSite.js')}}"></script>
+{% endblock %}

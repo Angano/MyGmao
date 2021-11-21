@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matériels de référence
+{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-md-11 mx-auto mb-5">
+			<h1>
+				<u>Matériels de référence</u>
+			</h1>
+		</div>
+	</div>
+	<div class="row" style="min-height:60vh">
+		<div class="col-md-11 mx-auto">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Marque</th>
+						<th>Modele</th>
+						<th>Categorie</th>
+						<th>actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for materieltype in materieltypes %}
+						<tr>
+
+							<td>{{ materieltype.marque }}</td>
+							<td>{{ materieltype.modele }}</td>
+							<td>{{ materieltype.categorie }}</td>
+							<td>
+								<a class="btn btn-sm btn-primary" href="{{ path('materieltype_show', {'id': materieltype.id}) }}">Détail</a>
+								<a class="btn btn-sm btn-primary" href="{{ path('materieltype_edit', {'id': materieltype.id}) }}">Editer</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="8">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+
+		</div>
+	</div>
+
+
+	<div class="row mb-4">
+
+		<div class=" col-md-4 offset-md-4" id="pagination_nav">
+
+			{{ knp_pagination_render(materieltypes) }}
+
+
+		</div>
+		<div class="col-md-4 mx-auto text-center ">
+
+			<a class="btn btn-sm btn-primary" href="{{ path('materieltype_new') }}">Nouveau matériel de référence</a>
+		</div>
+	</div>
+
+{% endblock %}

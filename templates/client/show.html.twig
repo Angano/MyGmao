@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail d'un client
+{% endblock %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-12 mx-auto">
+		{{ include('client/_form.html.twig', {'titre':'Détail d\'un client','enregistrer_label': 'Mettre à jour', 'edit':true}) }}
+	</div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Liste des matériels appartenant au client</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+
+		<div class="modal-body">
+			
+			
+					<div class="row row-cols-1 row-cols-md-4 g-4  ">
+						{% for materiel in client.materiels %}
+							<div class="col">
+								<div class="card">
+									
+									<div class="card-body">
+										<h5 class="card-title">
+											<b>Marque:</b>
+											{{materiel.materieltype.marque}}</h5>
+										<p class="card-text">
+											<b>Catégorie:</b>
+											{{materiel.materieltype.categorie}}</p>
+										<p class="card-text">
+											<b>Modèle:</b>
+											{{materiel.materieltype.modele}}</p>
+										<p class="card-text">
+											<b>Matricule:</b>
+											{{materiel.matricule}}</p>
+									</div>
+									<div class="card-footer">
+										<a href="{{url('materiel_edit',{'id':materiel.id})}}" class="btn btn-sm btn-primary">Edit
+										</a>
+										<a href="{{url('materiel_show',{'id':materiel.id})}}" class="btn btn-sm btn-primary">Détail</a>
+										<a href="" class="btn btn-sm btn-primary">Intervention</a>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+			
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+		
+		</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+<script>
+$(document).ready(function(){
+$('input').attr('readonly','true')
+$('textarea').attr('readonly','true')
+
+})
+</script>
+
+{% endblock %}
+
